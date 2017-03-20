@@ -51,7 +51,7 @@ router.route('/:id')
 router.route('/:id/launch')
     .post(parseUrlencoded, function(request, response) {
         var launcher = new ReLauncher(request.body.api_key, request.params.id)
-        launcher.launchRocket(function() {
+        launcher.startMonitoring(function() {
             response.json('the application is launched for the job: '+request.params.id);
         });
 

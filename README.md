@@ -20,4 +20,12 @@ To use the demo you need to enter your CrowdFlower API Key, you can find [here](
 #### Publication
 The paper describing the approach is accepted to [CSCW2016 conference in San Francisco](http://cscw.acm.org/2016/index.php)
 
+## How to install / run
+
+```bash
+git clone https://github.com/pavelk2/crowd-relauncher YOUR_FOLDER_NAME
+cd YOUR_FOLDER_NAME
+npm install
+```
+
 

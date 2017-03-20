@@ -17,51 +17,25 @@ module.exports.prototype = {
 
         log.info(moduletitle, unit.info.state);
         log.info(moduletitle, typeof unit.info.state);
-        /*if (unit.info.state == "judging") {
+
+        if (unit.info.state == "judging") {
             log.info(moduletitle, "JUDGING "+unit.info.data.re_unit_id);
-            // The block is commented to make sure relaunching is not done based on execution delays
-            //unit.processJudgingUnit();
-            unit.inNeedToRelaunch(function(unit_to_relaunch){
-                log.info(moduletitle, "we relaunch the UNIT ID:"+unit_to_relaunch.id);
-                unit_to_relaunch.relaunchUnit();
-            });
-        }*/
-        /*
+            unit.processJudgingUnit();
+        }
         if (unit.info.state == "canceled" && unit.info.results.judgments.length > 0 &&
             unit.info.data.crowdlauncher.status == "NF") {
             unit.processCancelledUnit();
-        }*/
-        
-        /*if (unit.info.state == "finalized" && unit.info.results.judgments.length > 0 && unit.info.data.crowdlauncher) {
-            unit.processFinalizedUnit();
-        }*/
-        if (unit.info.state == "finalized") {
-            unit.inNeedToRelaunch(function(unit_to_relaunch){
-                log.info(moduletitle, "we relaunch the UNIT ID:"+unit_to_relaunch.id);
-                unit_to_relaunch.relaunchUnit();
-            });
         }
-    },
-    inNeedToRelaunch: function(callback){
-        var unit = this;
-        log.info(moduletitle, "===========")
-        log.info(moduletitle, unit.launcher.toRelaunch);
-        log.info(moduletitle, parseInt(unit.info.data.re_unit_id));
-        log.info(moduletitle, unit.launcher.toRelaunch.indexOf(parseInt(unit.id)) > -1);
-        log.info(moduletitle, "===========")
-        if (unit.launcher.toRelaunch.indexOf(parseInt(unit.id)) > -1){
-            log.info(moduletitle, "Unit "+unit.id+"/"+unit.info.data.re_unit_id+" is in the list to be relaunched");
-            callback(unit);
-        }else{
-            log.info(moduletitle, "Unit "+unit.id+"/"+unit.info.data.re_unit_id+" is NOT in the list to be relaunched");
-            
+        
+        if (unit.info.state == "finalized" && unit.info.results.judgments.length > 0 && unit.info.data.crowdlauncher) {
+            unit.processFinalizedUnit();
         }
     },
     processJudgingUnit: function() {
         var unit = this;
         
         log.info(moduletitle, 'processing judging unit [' + unit.id + ']');
-
+        // CRISTINA, HERE YOU DEFINE A CONDITION TO RELAUNCH THE UNIT
         if (unit.needReassignment()) {
             unit.relaunchUnit();
         } else {
@@ -149,6 +123,7 @@ module.exports.prototype = {
             }
         });
     },
+    // CRISTINA, HERE YOU DEFINE A CONDITION TO RELAUNCH THE UNIT
     needReassignment: function() {
         var unit = this;
         if (unit.info.state == "judging") {
